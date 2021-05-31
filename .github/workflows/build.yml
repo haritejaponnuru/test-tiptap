@@ -4,10 +4,6 @@ name: CI
 
 # Control when the action will run. 
 on:
-  push:
-    branches:
-      - main
-      - cd
   # Triggers the workflow on push or pull request events but only for the main branch
 
   # Allows you to run this workflow manually from the Actions tab
