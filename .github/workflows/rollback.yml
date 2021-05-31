@@ -1,0 +1,23 @@
+name: rollback
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Manual deployement to stagging'
+        required: true
+        default: 'main'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: Rollback Release
+        if: failure() && steps.create_release.outputs.id != ''
+        uses: author/action-rollback@stable
+        with:
+          # Using a known release ID
+          id: ${{ steps.create_release.id }}
+          # Using a tag name
+          tag: ${{ steps.autotagger.outputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
