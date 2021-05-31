@@ -1,0 +1,91 @@
+name: Build Workflow
+on:
+  push:
+    branches:
+      - main
+      - cicd-test
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+env:
+  AWS_REGION_DEV: us-east-1                  # set this to your preferred AWS region, e.g. us-west-1
+  ECR_REPOSITORY_DEV: tiptappay_web          # set this to your Amazon ECR repository name.
+  ECS_SERVICE_DEV: tiptappay_dev_http                # set this to your Amazon ECS service name
+  ECS_CLUSTER_DEV: TTP-Development                # set this to your Amazon ECS cluster name
+  ECS_TASK_DEFINITION_DEV: ecs-taskdefinition.json # set this to the path to your Amazon ECS task definition
+  CONTAINER_NAME_DEV: tiptappay_web           # set this to the name of the container in the    # containerDefinitions section of your task definition
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-dev:
+    name: Build-Development
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu' # See 'Supported distributions' for available options (only zulu and adopt are supported distributions)
+          java-version: 11
+          check-latest: true
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v2.1.5
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v2.1.5
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B -e verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION_DEV }}
+
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY_DEV: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG_DEV: latest
+
+        run: |
+          # Build a docker container and push it to ECR so that it can be deployed to ECS.
+          docker build -t $ECR_REGISTRY_DEV/$ECR_REPOSITORY_DEV:$IMAGE_TAG_DEV .
+          docker push $ECR_REGISTRY_DEV/$ECR_REPOSITORY_DEV:$IMAGE_TAG_DEV
+          echo "::set-output name=image::$ECR_REGISTRY_DEV/$ECR_REPOSITORY_DEV:$IMAGE_TAG_DEV"
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION_DEV }}
+          container-name: ${{ env.CONTAINER_NAME_DEV }}
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE_DEV }}
+          cluster: ${{ env.ECS_CLUSTER_DEV }}
+          wait-for-service-stability: true
