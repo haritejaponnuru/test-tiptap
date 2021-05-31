@@ -4,7 +4,9 @@ name: CI
 
 # Control when the action will run. 
 on:
-  release: v0.*
+  push:
+    tags: 
+      - "v0.*"
   # Triggers the workflow on push or pull request events but only for the main branch
 
   # Allows you to run this workflow manually from the Actions tab
