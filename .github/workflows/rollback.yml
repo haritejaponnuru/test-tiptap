@@ -18,6 +18,6 @@ jobs:
           # Using a known release ID
           id: ${{ steps.create_release.id }}
           # Using a tag name
-          tag: ${{ steps.autotagger.outputs.version }}
+          tag: ${{ steps.autotagger.outputs.output }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
