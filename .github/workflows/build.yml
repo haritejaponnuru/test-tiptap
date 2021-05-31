@@ -4,6 +4,9 @@ name: CI
 
 # Control when the action will run. 
 on:
+  push:
+    tags: 
+      - "v0.*"
   # Triggers the workflow on push or pull request events but only for the main branch
 
   # Allows you to run this workflow manually from the Actions tab
@@ -12,7 +15,7 @@ on:
       branch:
         description: 'Manual deployement to stagging'
         required: true
-        default: 'main'
+       # default: 'cd'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -35,3 +38,8 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+      - name: Build and analyze
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
