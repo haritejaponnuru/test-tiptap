@@ -22,4 +22,4 @@ jobs:
       - name: Undo Push
         uses: exions/undo-push@v1.0.0
         with:
-          branch: ${{ github.event.inputs.branch }}
+          branch: main
