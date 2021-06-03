@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout
+        env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
         uses: actions/checkout@v2
         with:
            ref: ${{ github.event.inputs.branch }}
