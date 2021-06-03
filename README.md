@@ -7,3 +7,5 @@ how
 random Commits
 add commit
 edit revert
+
+revert the commit 
