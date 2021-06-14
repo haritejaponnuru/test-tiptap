@@ -1,4 +1,3 @@
 # test-tiptap
-testing fot iptap
-hh
+testing fot tiptap
 
