@@ -16,12 +16,12 @@ on:
       - created
 
 
-  AWS_REGION_: us-east-1                  # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: tiptappay_web           # set this to your Amazon ECR repository name
-  ECS_SERVICE: tiptappay_prod_http                # set this to your Amazon ECS service name
-  ECS_CLUSTER: TTP-Production                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: ecs-taskdefinition-prod.json # set this to the path to your Amazon ECS task definition
-  CONTAINER_NAME: app
+  AWS_REGION_: ca-central-1                  # set this to your preferred AWS region, e.g. us-west-1
+  ECR_REPOSITORY: test           # set this to your Amazon ECR repository name
+  ECS_SERVICE: sample-app-service               # set this to your Amazon ECS service name
+  ECS_CLUSTER: test-tiptap               # set this to your Amazon ECS cluster name
+  ECS_TASK_DEFINITION: taskdefinition.json # set this to the path to your Amazon ECS task definition
+  CONTAINER_NAME: sample-app
 
 defaults:
   run:
