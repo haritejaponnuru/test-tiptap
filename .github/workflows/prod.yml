@@ -75,9 +75,14 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-     # - name: Get the version
+      - name: Get the version
       #  id: get_version
        # run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10}) #set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        run: |
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
@@ -86,10 +91,7 @@ jobs:
           #IMAGE_TAG: ${{ steps.get_tag.outputs.tag }}
         run: |
           # Build and push the base image to ECR so that it can be deployed to ECS.
-           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-           # echo IMAGE_ID=$IMAGE_ID
-           echo VERSION=$VERSION
+         
            docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION .
            docker push $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION
            echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$VERSION"
