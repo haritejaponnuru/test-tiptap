@@ -1,3 +1,3 @@
 # test-tiptap
-testing fot tiptap.
+testing fot tiptap
 
