@@ -82,7 +82,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ steps.get_version.outputs.VERSION }}
+          IMAGE_TAG: latest #${{ steps.get_version.outputs.VERSION }}
         run: |
           # Build and push the base image to ECR so that it can be deployed to ECS.
            docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
