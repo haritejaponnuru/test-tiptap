@@ -82,9 +82,13 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ steps.get_tag.outputs.tag }}
+          #IMAGE_TAG: ${{ steps.get_tag.outputs.tag }}
         run: |
           # Build and push the base image to ECR so that it can be deployed to ECS.
+           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+           echo IMAGE_ID=$IMAGE_ID
+           echo VERSION=$VERSION
            docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
            docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
            echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
