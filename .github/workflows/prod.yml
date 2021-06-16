@@ -85,7 +85,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           #IMAGE_TAG: ${{ steps.tag-number.outputs.tag }}
         run: |
-           Build and push the base image to ECR so that it can be deployed to ECS.
+          # Build and push the base image to ECR so that it can be deployed to ECS.
            VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
            [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
            echo IMAGE_ID=$IMAGE_ID
