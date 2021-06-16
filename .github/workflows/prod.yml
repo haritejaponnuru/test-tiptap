@@ -89,11 +89,12 @@ jobs:
            [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
            echo IMAGE_ID=$IMAGE_ID
            echo VERSION=$VERSION
-           docker tag image $IMAGE_ID:$VERSION
+           
  
            # Build and push the base image to ECR so that it can be deployed to ECS.
         
-           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION .
+           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY .
+           docker tag image $IMAGE_ID:$VERSION
            docker push $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION
            echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$VERSION"
 
