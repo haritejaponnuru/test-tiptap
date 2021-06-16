@@ -78,32 +78,22 @@ jobs:
       #  id: get_version
        # run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10}) #set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
           
-      - name: Set Tag Number
-        id: tag-number
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-        
-      - name: Check Tag Release
-        env:
-          RELEASE_VERSION: ${{ steps.tag-number.outputs.tag }}
-        run: |
-          echo $RELEASE_VERSION
-          echo ${{ steps.vars.outputs.tag }}
           
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ steps.tag-number.outputs.tag }}
+          #IMAGE_TAG: ${{ steps.tag-number.outputs.tag }}
         run: |
-          # Build and push the base image to ECR so that it can be deployed to ECS.
-          # VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-           #[[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          # echo IMAGE_ID=$IMAGE_ID
-           #echo VERSION=$VERSION
-           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY .
-           docker tag $ECR_REGISTRY/$ECR_REPOSITORY $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+           Build and push the base image to ECR so that it can be deployed to ECS.
+           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+           echo IMAGE_ID=$IMAGE_ID
+           echo VERSION=$VERSION
+           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION .
+           # docker tag $ECR_REGISTRY/$ECR_REPOSITORY $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION
+           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION
+           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$VERSION"
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
