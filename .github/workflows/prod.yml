@@ -4,12 +4,22 @@ on:
     #branches:
      # - releases/**
     tags:
+<<<<<<< HEAD
       - 'v***'             # Push events to v1 tag
       #- 'v**'           # Push events to v1.0, v1.1, and v1.9 tags
   pull_request:
     #branches:
      # - releases/**
       - 'v***'	
+=======
+      - v*             # Push events to v1 tag
+      - v**           # Push events to v1.0, v1.1, and v1.9 tags
+  pull_request:
+    #branches:
+     # - releases/**
+   # tags:
+    #  - v**  
+>>>>>>> 596f9fe93c286a8bc256f6e9f5d0dc4c91cd9b40
   # Also trigger on page_build, as well as release created events
   page_build:
   release:
@@ -74,11 +84,6 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-
-      #- name: Get the version
-      #  id: get_version
-       # run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10}) #set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-          
           
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
