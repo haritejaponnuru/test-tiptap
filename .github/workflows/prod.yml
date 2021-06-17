@@ -81,7 +81,8 @@ jobs:
           #IMAGE_TAG: ${{ steps.tag-number.outputs.tag }}
         run: |
            VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+           [[ "${{ github.ref }}" == "refs/tags/"* ]]   
+      
            echo VERSION=$VERSION
      
  
