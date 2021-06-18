@@ -69,7 +69,7 @@
       "EC2",
       "FARGATE"
   ],
-  #"taskDefinitionArn": "arn:aws:ecs:ca-central-1:921053217125:task-definition/first-run-task-definition:2",
+  "taskDefinitionArn": "arn:aws:ecs:ca-central-1:921053217125:task-definition/first-run-task-definition",
   "family": "first-run-task-definition",
   "requiresAttributes": [
     {
@@ -121,7 +121,7 @@
   ],
   "networkMode": "awsvpc",
   "cpu": "256",
-  #"revision": 2,
+  "revision",
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
