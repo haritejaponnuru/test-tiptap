@@ -71,50 +71,50 @@
   ],
   #"taskDefinitionArn": "arn:aws:ecs:ca-central-1:921053217125:task-definition/first-run-task-definition:2",
   "family": "first-run-task-definition",
-#  "requiresAttributes": [
-#    {
-#      "targetId": null,
-#      "targetType": null,
-#      "value": null,
-#      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-#    },
-#    {
-#      "targetId": null,
-#      "targetType": null,
-#      "value": null,
-#      "name": "ecs.capability.execution-role-awslogs"
-#    },
-#    {
-#      "targetId": null,
-#      "targetType": null,
-#      "value": null,
-#      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-#    },
-#    {
-#      "targetId": null,
-#      "targetType": null,
-#      "value": null,
-#      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
-#    },
-#    {
-#      "targetId": null,
-#      "targetType": null,
-#      "value": null,
-#      "name": "com.amazonaws.ecs.capability.task-iam-role"
-#    },
-#    {
-#      "targetId": null,
-#      "targetType": null,
-#      "value": null,
-#      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
-#    },
-#    {
-#      "targetId": null,
-#      "targetType": null,
-#      "value": null,
-#      "name": "ecs.capability.task-eni"
-#    }
-#  ],
+  "requiresAttributes": [
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "ecs.capability.execution-role-awslogs"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.task-iam-role"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "ecs.capability.task-eni"
+    }
+  ],
   "pidMode": null,
   "requiresCompatibilities": [
       "FARGATE"
