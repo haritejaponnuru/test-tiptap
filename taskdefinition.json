@@ -5,8 +5,8 @@
     "networkMode": "awsvpc",
     "containerDefinitions": [
         {
-            "name": "",
-            "image": "",
+            "name": "sample-app",
+            "image": "921053217125.dkr.ecr.ca-central-1.amazonaws.com/tiptap",
             "repositoryCredentials": {
                 "credentialsParameter": ""
             },
