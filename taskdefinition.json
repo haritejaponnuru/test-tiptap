@@ -2,6 +2,7 @@
   "requiresCompatibilities": [
     "FARGATE"
   ],
+  "executionRoleArn": "arn:aws:iam::921053217125:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
       "name": "mycontainer",
