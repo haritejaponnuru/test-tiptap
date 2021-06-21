@@ -1,11 +1,15 @@
-name: Production-Workflow
+name: dev-Workflow
 on:
   push:
+    branches:
+      - main
     tags:
       - v*             # Push events to v1 tag
+      - v**           # Push events to v1.0, v1.1, and v1.9 tags
   pull_request:
     tags:
       - v*             # Push events to v1 tag
+      - v**           # Push events to v1.0, v1.1, and v1.9 tags
   # Also trigger on page_build, as well as release created events
   page_build:
   release:
@@ -15,10 +19,10 @@ on:
 env:
   AWS_REGION: ca-central-1                  # set this to your preferred AWS region, e.g. us-west-1
   ECR_REPOSITORY: tiptap           # set this to your Amazon ECR repository name
-  ECS_SERVICE: sample-app-service               # set this to your Amazon ECS service name
-  ECS_CLUSTER: test-tiptap               # set this to your Amazon ECS cluster name
+  ECS_SERVICE: myservice               # set this to your Amazon ECS service name
+  ECS_CLUSTER: mycluster               # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: taskdefinition.json # set this to the path to your Amazon ECS task definition
-  CONTAINER_NAME: sample-app
+  CONTAINER_NAME: mycontainer
 
 defaults:
   run:
@@ -29,7 +33,7 @@ jobs:
 
 
   build-stage:
-    name: Build-Production
+    name: Build-dev
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -76,26 +80,17 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          #IMAGE_TAG: ${{ steps.tag-number.outputs.tag }}
+          IMAGE_TAG: latest
         run: |
-           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-           [[ "${{ github.ref }}" == "refs/tags/"* ]]   
-      
-           echo VERSION=$VERSION
      
- 
            # Build and push the base image to ECR so that it can be deployed to ECS.
         
-           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION .
+           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
            # docker tag $ECR_REGISTRY/$ECR_REPOSITORY $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION
-           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION
-           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$VERSION"
+           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
            
-     # - name: Download task definition
-      #  id: download-task
-       # run: |
-        #  aws ecs describe-task-definition --task-definition first-run-task-definition --query taskDefinition > task-definition.json
-
+    
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
