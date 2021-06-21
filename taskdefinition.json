@@ -19,7 +19,7 @@
       "logConfiguration":{
             "logDriver":"awslogs",
             "options":{
-               "awslogs-group":"awslogs-mytask-ecs",
+               "awslogs-group":"/ecs/mytask",
                "awslogs-region":"ca-central-1",
                "awslogs-stream-prefix":"ecs"
             }
