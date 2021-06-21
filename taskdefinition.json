@@ -9,7 +9,7 @@
         "logDriver": "awslogs",
         "secretOptions": null,
         "options": {
-          "awslogs-group": "/ecs/Dev",
+          "awslogs-group": "/ecs/mytask",
           "awslogs-region": "ca-central-1",
           "awslogs-stream-prefix": "ecs"
         }
@@ -31,7 +31,7 @@
       "memoryReservation": null,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "921053217125.dkr.ecr.ca-central-1.amazonaws.com/tiptap",
+      "image": "tiptap:latest",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -48,18 +48,18 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "test"
+      "name": "mycontainer"
     }
   ],
   "placementConstraints": [],
-  "memory": "1024",
+  "memory": "2048",
   "taskRoleArn": "arn:aws:iam::921053217125:role/ecsTaskExecutionRole",
   "compatibilities": [
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:ca-central-1:921053217125:task-definition/Dev:1",
-  "family": "Dev",
+  "taskDefinitionArn": "arn:aws:ecs:ca-central-1:921053217125:task-definition/mytask:2",
+  "family": "mytask",
   "requiresAttributes": [
     {
       "targetId": null,
@@ -77,12 +77,6 @@
       "targetId": null,
       "targetType": null,
       "value": null,
-      "name": "com.amazonaws.ecs.capability.ecr-auth"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
     },
     {
@@ -90,12 +84,6 @@
       "targetType": null,
       "value": null,
       "name": "com.amazonaws.ecs.capability.task-iam-role"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "ecs.capability.execution-role-ecr-pull"
     },
     {
       "targetId": null,
@@ -115,8 +103,8 @@
     "FARGATE"
   ],
   "networkMode": "awsvpc",
-  "cpu": "256",
-  "revision": 1,
+  "cpu": "1024",
+  "revision": 2,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
