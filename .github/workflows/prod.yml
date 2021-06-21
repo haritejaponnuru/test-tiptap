@@ -3,11 +3,9 @@ on:
   push:
     tags:
       - v*             # Push events to v1 tag
-      - v**           # Push events to v1.0, v1.1, and v1.9 tags
   pull_request:
     tags:
       - v*             # Push events to v1 tag
-      - v**           # Push events to v1.0, v1.1, and v1.9 tags
   # Also trigger on page_build, as well as release created events
   page_build:
   release:
