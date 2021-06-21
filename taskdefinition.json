@@ -54,13 +54,13 @@
   "placementConstraints": [],
   "memory": "2048",
   "taskRoleArn": "arn:aws:iam::921053217125:role/ecsTaskExecutionRole",
-  "compatibilities": [
-    "EC2",
-    "FARGATE"
+  //"compatibilities": [
+    //"EC2",
+    //"FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:ca-central-1:921053217125:task-definition/mytask:2",
+  //"taskDefinitionArn": "arn:aws:ecs:ca-central-1:921053217125:task-definition/mytask:2",
   "family": "mytask",
-  "requiresAttributes": [
+  //"requiresAttributes": [
     {
       "targetId": null,
       "targetType": null,
@@ -104,8 +104,8 @@
   ],
   "networkMode": "awsvpc",
   "cpu": "1024",
-  "revision": 2,
-  "status": "ACTIVE",
+  //"revision": 2,
+ // "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
   "volumes": []
