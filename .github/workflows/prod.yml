@@ -6,11 +6,7 @@ on:
   pull_request:
     tags:
       - v*             # Push events to v1 tag
-  # Also trigger on page_build, as well as release created events
-  page_build:
-  release:
-    types: # This configuration does not affect the page_build event above
-      - created
+  # Also trigger on page_build, as well as release cr
 
 env:
   AWS_REGION: ca-central-1                  # set this to your preferred AWS region, e.g. us-west-1
@@ -41,12 +37,7 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
           check-latest: true
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v2.1.6
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+      
       - name: Cache Maven packages
         uses: actions/cache@v2.1.6
         with:
