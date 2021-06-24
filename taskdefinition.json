@@ -37,7 +37,6 @@
       "memoryReservation": null,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "921053217125.dkr.ecr.ca-central-1.amazonaws.com/tiptap:latest",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -60,64 +59,13 @@
   "placementConstraints": [],
   "memory": "512",
   "taskRoleArn": null,
-  "compatibilities": [
-    "EC2",
-    "FARGATE"
-  ],
-  "taskDefinitionArn": "arn:aws:ecs:ca-central-1:921053217125:task-definition/mytask:10",
   "family": "mytask",
-  "requiresAttributes": [
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "ecs.capability.execution-role-awslogs"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.ecr-auth"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "ecs.capability.execution-role-ecr-pull"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "ecs.capability.task-eni"
-    }
-  ],
   "pidMode": null,
   "requiresCompatibilities": [
     "FARGATE"
   ],
   "networkMode": "awsvpc",
   "cpu": "256",
-  "revision": 10,
-  "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
   "volumes": []
